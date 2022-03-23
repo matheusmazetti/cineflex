@@ -102,3 +102,51 @@ section h1{
     color: #293845;
     margin-left: 10px;
 }
+
+.sessions{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    margin-top: 80px;
+}
+
+.session{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.session h1{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    color: #293845;
+}
+
+.session-buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.session-buttons button{
+    width: 83px;
+    height: 43px;
+    background: #E8833A;
+    border-radius: 3px;
+    border: 0px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+}
