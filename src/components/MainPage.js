@@ -16,7 +16,7 @@ export default function MainPage(){
 
     React.useEffect(() => {
         let promisse = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies');
-        promisse.then((response)=>{setFilms(response.data)});
+        promisse.then((response) => {setFilms(response.data)});
     }, [])
     return(
         <section>
