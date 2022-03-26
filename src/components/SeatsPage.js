@@ -16,12 +16,16 @@ function Footer(props){
 }
 
 function Seat(props){
-    const { number, isAvailable } = props;
+    const { number, isAvailable, id } = props;
     const [available, setAvailable] = React.useState(false);
+    const [selected, setSelected] = React.useState(false);
 
     React.useEffect(() => {setAvailable(isAvailable)},[])
     return(
-        <div className={`seat ${!available ? 'disable':''}`}>{number}</div>
+        <div className={`seat ${!available ? 'disable':''} ${selected ? 'selected': ''}`} onClick={() => {
+            if(available){
+                setSelected(true)
+        }}}>{number}</div>
     )
 }
 
@@ -30,7 +34,7 @@ function Seats(props){
     return(
         <div className="seats">
             {seatsObj.map((seat) => 
-                <Seat number={seat.name} isAvailable={seat.isAvailable}/>
+                <Seat number={seat.name} isAvailable={seat.isAvailable} id={seat.id}/>
             )}
         </div>
     )
