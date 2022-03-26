@@ -21,7 +21,7 @@ function Seat(props){
 
     React.useEffect(() => {setAvailable(isAvailable)},[])
     return(
-        <div className={`seat ${available ? 'disable':''}`}>{number}</div>
+        <div className={`seat ${!available ? 'disable':''}`}>{number}</div>
     )
 }
 
