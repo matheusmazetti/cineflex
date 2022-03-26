@@ -179,3 +179,30 @@ section h1{
     color: #FFFFFF;
     margin-right: 9px;
 }
+
+.seats{
+    width: 350px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.seat{
+    width: 26px;
+    height: 26px;
+    background: #C3CFD9;
+    border: 1px solid #808F9D;
+    box-sizing: border-box;
+    border-radius: 12px;
+    font-size: 11px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 7px;
+    margin-bottom: 26px;
+}
+
+.disable{
+    background: #FBE192;
+    border: 1px solid #F7C52B;
+}

@@ -15,6 +15,27 @@ function Footer(props){
     )
 }
 
+function Seat(props){
+    const { number, isAvailable } = props;
+    const [available, setAvailable] = React.useState(false);
+
+    React.useEffect(() => {setAvailable(isAvailable)},[])
+    return(
+        <div className={`seat ${available ? 'disable':''}`}>{number}</div>
+    )
+}
+
+function Seats(props){
+    const { seatsObj } = props;
+    return(
+        <div className="seats">
+            {seatsObj.map((seat) => 
+                <Seat number={seat.name} isAvailable={seat.isAvailable}/>
+            )}
+        </div>
+    )
+}
+
 
 export default function SeatsPage(){
     const { sessaoId } = useParams();
@@ -34,6 +55,7 @@ export default function SeatsPage(){
     } else {
         return(
             <>
+                <Seats seatsObj={obj.seats}/>
                 <Footer image={obj.movie.posterURL} name={obj.movie.title} sessionDay={obj.day.weekday} sessionTime={obj.name} />
             </>
         )
