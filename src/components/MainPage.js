@@ -3,10 +3,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Movie(props){
-    const { id, image } = props;
+    const { filmId, image } = props;
     return(
         <div className="movie">
-            <Link to={`/filme/${id}`}><img src={image} /></Link>
+            <Link to={`/filme/${filmId}`}><img src={image} /></Link>
         </div>
     )
 }
@@ -23,7 +23,7 @@ export default function MainPage(){
             <h1>Selecione o filme</h1>
             <div className="movies">
                 {films.map((element) => 
-                    <Movie id={element.id} image={element.posterURL}/>
+                    <Movie filmId={element.id} image={element.posterURL}/>
                 )}
             </div>
         </section>
