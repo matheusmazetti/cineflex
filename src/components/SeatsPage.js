@@ -19,12 +19,18 @@ function Seat(props){
     const { number, isAvailable, id } = props;
     const [available, setAvailable] = React.useState(false);
     const [selected, setSelected] = React.useState(false);
+    const [click, setClick] = React.useState(false);
 
     React.useEffect(() => {setAvailable(isAvailable)},[])
     return(
-        <div className={`seat ${!available ? 'disable':''} ${selected ? 'selected': ''}`} onClick={() => {
+        <div className={`seat ${!available ? 'disable':''} ${selected && click ? 'selected': ''}`} onClick={() => {
             if(available){
-                setSelected(true)
+                if(!click){
+                    setSelected(true)
+                    setClick(true)
+                } else {
+                    setClick(false)
+                }
         }}}>{number}</div>
     )
 }
@@ -34,7 +40,7 @@ function Seats(props){
     return(
         <div className="seats">
             {seatsObj.map((seat) => 
-                <Seat number={seat.name} isAvailable={seat.isAvailable} id={seat.id}/>
+                <Seat number={seat.name} isAvailable={seat.isAvailable} id={seat.id} />
             )}
         </div>
     )
@@ -44,6 +50,8 @@ function Seats(props){
 export default function SeatsPage(){
     const { sessaoId } = useParams();
     const [obj, setObj] = React.useState([]);
+    const [name, setName] = React.useState('');
+    const [cpf, setCpf] = React.useState('');
     
     React.useEffect(() => {
         let promisse = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${sessaoId}/seats`);
@@ -59,7 +67,29 @@ export default function SeatsPage(){
     } else {
         return(
             <>
-                <Seats seatsObj={obj.seats}/>
+                <div className="content">
+                    <h1>Selecione o(s) assento(s)</h1>
+                    <Seats seatsObj={obj.seats}/>
+                    <div className="menu">
+                        <div className="item">
+                            <div className="item1"></div>
+                            <h1>Selecionado</h1>
+                        </div>
+                        <div className="item">
+                            <div className="item2"></div>
+                            <h1>Disponível</h1>
+                        </div>
+                        <div className="item">
+                            <div className="item3"></div>
+                            <h1>Indisponível</h1>
+                        </div>
+                    </div>
+                    <label for="name">Nome do comprador:</label>
+                    <input type="text" placeholder="Digite o seu nome..." id="name" onChange={(e) => setName(e.target.value)}></input>
+                    <label for="cpf">CPF do comprador:</label>
+                    <input type="text" placeholder="Digite o seu cpf..." id="cpf" onChange={(e) => setCpf(e.target.value)}></input>
+                    <button>Reservar assento(s)</button>
+                </div>
                 <Footer image={obj.movie.posterURL} name={obj.movie.title} sessionDay={obj.day.weekday} sessionTime={obj.name} />
             </>
         )
