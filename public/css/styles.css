@@ -128,8 +128,12 @@ section h1{
     align-items: center;
     margin-top: 100px;
     margin-bottom: 150px;
+    text-decoration: none;
 }
 
+a {
+    text-decoration: none;
+}
 .sessions h1{
     font-style: normal;
     font-weight: 400;
