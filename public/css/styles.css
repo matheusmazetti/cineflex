@@ -408,3 +408,18 @@ label{
     margin-top: 20px;
     margin-left: 20px;
 }
+
+.sucess-content button{
+    width: 225px;
+    height: 42px;
+    background: #E8833A;
+    border-radius: 3px;
+    border: 0px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    color: #FFFFFF;
+    margin-top: 50px;
+}

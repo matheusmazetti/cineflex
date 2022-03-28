@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Sucess(props){
     const { obj } = props;
@@ -55,8 +56,10 @@ export default function Sucess(props){
                 </div>
                 <div className="comprador">
                     <h1>Comprador</h1>
-                    
+                    <h2>{`Nome: ${obj.name}`}</h2>
+                    <h2>{`CPF: ${obj.cpf}`}</h2>
                 </div>
+                <Link to="/"><button>Voltar pra home</button></Link>
             </div>
         )
     }
