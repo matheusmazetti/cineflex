@@ -16,11 +16,12 @@ export default function App(){
             <Routes>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/filme/:filmId" element={<MoviePage />} />
-                <Route path="/sessao/:sessaoId" element={<SeatsPage callback={(sessionId, seats, name, cpf) => setObj({
+                <Route path="/sessao/:sessaoId" element={<SeatsPage callback={(sessionId, seats, name, cpf, seatsName) => setObj({
                     sessionId: sessionId,
                     name: name,
                     cpf: cpf,
-                    seats: seats
+                    seats: seats,
+                    seatsName: seatsName
                 })}/>} />
                 <Route path="/sucesso" element={<Sucess obj={obj}/>} />
             </Routes>

@@ -25,7 +25,8 @@ export default function Sucess(props){
             setLugares(resposta.data.seats)})
     }, [])
 
-    let selected = obj.seats;
+    let selected = obj.seatsName;
+    console.log(selected);
     
     if(sessao.length === 0){
         return(
@@ -42,17 +43,9 @@ export default function Sucess(props){
                 </div>
                 <div className="assentos">
                     <h1>Ingressos</h1>
-                    {() => {for(let i = 0; i < selected.length; i++){
-                            lugares.map((seat) => {
-                                if(seat.id === selected[i]){
-                                    return(
-                                        <h2>{`Assento ${seat.name}`}</h2>
-                                    )
-                                    }
-                                })
-                            }
-                        }
-                    }
+                    {selected.map((seat) => 
+                        <h2>{`Assento ${seat}`}</h2>
+                    )}
                 </div>
                 <div className="comprador">
                     <h1>Comprador</h1>

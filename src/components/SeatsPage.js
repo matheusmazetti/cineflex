@@ -28,10 +28,10 @@ function Seat(props){
                 if(!click){
                     setSelected(true)
                     setClick(true)
-                    callback(id, 1)
+                    callback(id, 1, number)
                 } else {
                     setClick(false)
-                    callback(id, 0)
+                    callback(id, 0, number)
                 }
         }}}>{number}</div>
     )
@@ -57,7 +57,9 @@ export default function SeatsPage(props){
     const [name, setName] = React.useState('');
     const [cpf, setCpf] = React.useState('');
     const [seats, setSeats] = React.useState([]);
+    const [sName, setSName] = React.useState([]);
     console.log(seats);
+    console.log(sName);
     React.useEffect(() => {
         let promisse = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${sessaoId}/seats`);
         promisse.then((response) => {setObj(response.data)});
@@ -73,13 +75,15 @@ export default function SeatsPage(props){
             <>
                 <div className="content">
                     <h1>Selecione o(s) assento(s)</h1>
-                    <Seats seatsObj={obj.seats} callback={(id, code) => {
+                    <Seats seatsObj={obj.seats} callback={(id, code, lugar) => {
                     if(code === 1){
                         setSeats([...seats, id])
+                        setSName([...sName, lugar])
                     } else if(code === 0) {
                         let index = seats.indexOf(id);
 
                         seats.splice(index, 1);
+                        sName.splice(index, 1);
                     }
                 }}/>
                     <div className="menu">
@@ -100,7 +104,7 @@ export default function SeatsPage(props){
                     <input type="text" placeholder="Digite o seu nome..." id="name" onChange={(e) => setName(e.target.value)}></input>
                     <label for="cpf">CPF do comprador:</label>
                     <input type="text" placeholder="Digite o seu cpf..." id="cpf" onChange={(e) => setCpf(e.target.value)}></input>
-                    <Link to='/sucesso'><button onClick={() => callback(sessaoId, seats, name, cpf)}>Reservar assento(s)</button></Link>
+                    <Link to='/sucesso'><button onClick={() => callback(sessaoId, seats, name, cpf, sName)}>Reservar assento(s)</button></Link>
                 </div>
                 <Footer image={obj.movie.posterURL} name={obj.movie.title} sessionDay={obj.day.weekday} sessionTime={obj.name} />
             </>
