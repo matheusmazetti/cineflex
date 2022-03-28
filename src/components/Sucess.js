@@ -1,6 +1,8 @@
+import React from "react";
+import axios from "axios";
+
 export default function Sucess(props){
     const { obj } = props;
-    const [ok, setOk] = React.useState(null);
     const [lugares, setLugares] = React.useState([]);
     const [sessao, setSessao] = React.useState([]);
     
@@ -22,20 +24,40 @@ export default function Sucess(props){
             setLugares(resposta.data.seats)})
     }, [])
 
+    let selected = obj.seats;
     
-    return(
-        <div className="sucess-content">
-            <h1>Pedido feito com sucesso!</h1>
-            <div className="sessao">
-                <h1>Filme e sessão</h1>
-
+    if(sessao.length === 0){
+        return(
+            <div>loading ...</div>
+        )
+    } else {
+        return(
+            <div className="sucess-content">
+                <h1>Pedido feito com sucesso!</h1>
+                <div className="sessao">
+                    <h1>Filme e sessão</h1>
+                    <h2>{sessao.movie.title}</h2>
+                    <h2>{`${sessao.day.date} ${sessao.name}`}</h2>
+                </div>
+                <div className="assentos">
+                    <h1>Ingressos</h1>
+                    {() => {for(let i = 0; i < selected.length; i++){
+                            lugares.map((seat) => {
+                                if(seat.id === selected[i]){
+                                    return(
+                                        <h2>{`Assento ${seat.name}`}</h2>
+                                    )
+                                    }
+                                })
+                            }
+                        }
+                    }
+                </div>
+                <div className="comprador">
+                    <h1>Comprador</h1>
+                    
+                </div>
             </div>
-            <div className="assentos">
-                <h1>Ingressos</h1>
-            </div>
-            <div className="comprador">
-                <h1>comprador</h1>
-            </div>
-        </div>
-    )
+        )
+    }
 }
