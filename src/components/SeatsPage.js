@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import React from "react";
 import axios from "axios";
 
@@ -16,7 +16,7 @@ function Footer(props){
 }
 
 function Seat(props){
-    const { number, isAvailable, id } = props;
+    const { number, isAvailable, id, callback } = props;
     const [available, setAvailable] = React.useState(false);
     const [selected, setSelected] = React.useState(false);
     const [click, setClick] = React.useState(false);
@@ -28,36 +28,40 @@ function Seat(props){
                 if(!click){
                     setSelected(true)
                     setClick(true)
+                    callback(id, 1)
                 } else {
                     setClick(false)
+                    callback(id, 0)
                 }
         }}}>{number}</div>
     )
 }
 
 function Seats(props){
-    const { seatsObj } = props;
+    const { seatsObj, callback } = props;
     return(
         <div className="seats">
             {seatsObj.map((seat) => 
-                <Seat number={seat.name} isAvailable={seat.isAvailable} id={seat.id} />
+                <Seat number={seat.name} isAvailable={seat.isAvailable} id={seat.id} callback={callback}/>
             )}
         </div>
     )
 }
 
 
-export default function SeatsPage(){
+
+export default function SeatsPage(props){
+    const { callback } = props;
     const { sessaoId } = useParams();
     const [obj, setObj] = React.useState([]);
     const [name, setName] = React.useState('');
     const [cpf, setCpf] = React.useState('');
-    
+    const [seats, setSeats] = React.useState([]);
+    console.log(seats);
     React.useEffect(() => {
         let promisse = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${sessaoId}/seats`);
         promisse.then((response) => {setObj(response.data)});
     }, []);
-    console.log(obj);
     if(obj.length === 0){
         return(
             <>
@@ -69,7 +73,15 @@ export default function SeatsPage(){
             <>
                 <div className="content">
                     <h1>Selecione o(s) assento(s)</h1>
-                    <Seats seatsObj={obj.seats}/>
+                    <Seats seatsObj={obj.seats} callback={(id, code) => {
+                    if(code === 1){
+                        setSeats([...seats, id])
+                    } else if(code === 0) {
+                        let index = seats.indexOf(id);
+
+                        seats.splice(index, 1);
+                    }
+                }}/>
                     <div className="menu">
                         <div className="item">
                             <div className="item1"></div>
@@ -88,7 +100,7 @@ export default function SeatsPage(){
                     <input type="text" placeholder="Digite o seu nome..." id="name" onChange={(e) => setName(e.target.value)}></input>
                     <label for="cpf">CPF do comprador:</label>
                     <input type="text" placeholder="Digite o seu cpf..." id="cpf" onChange={(e) => setCpf(e.target.value)}></input>
-                    <button>Reservar assento(s)</button>
+                    <Link to='/sucesso'><button onClick={() => callback(sessaoId, seats, name, cpf)}>Reservar assento(s)</button></Link>
                 </div>
                 <Footer image={obj.movie.posterURL} name={obj.movie.title} sessionDay={obj.day.weekday} sessionTime={obj.name} />
             </>
